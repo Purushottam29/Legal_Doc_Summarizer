@@ -1,90 +1,60 @@
-import torch
-import threading
-from transformers import AutoTokenizer, AutoModelForSeq2SeqLM
+import requests
+import json
 
-MODEL_NAME = "google/gemma-2b-it"
-_model_lock = threading.Lock()
-_tokenizer = None
-_model = None
+OLLAMA_URL = "http://localhost:11434/api/generate"
+MODEL_NAME = "mistral"
 
-# LOAD MODEL (lazy-load)
-def load_model():
-    global _tokenizer, _model
 
-    with _model_lock:
-        if _tokenizer is None or _model is None:
-            print("[Summarizer] Loading Gemma-2B-IT model...")
-            try:
-                _tokenizer = AutoTokenizer.from_pretrained(MODEL_NAME)
-                _model = AutoModelForSeq2SeqLM.from_pretrained(
-                    MODEL_NAME,
-                    torch_dtype=torch.float32,   # CPU-friendly
-                    device_map="auto",           # Use GPU if available
-                )
-                _model.eval()
-                print("[Summarizer] Gemma-2B-IT loaded successfully.")
-            except Exception as e:
-                print("[Summarizer] ERROR loading Gemma-2B-IT:", e)
-                raise e
+def query_ollama(prompt: str, max_tokens: int = 256) -> str:
+    try:
+        payload = {
+            "model": MODEL_NAME,
+            "prompt": prompt,
+            "options": {
+                "temperature": 0.2,
+                "num_predict": max_tokens
+            }
+        }
 
-    return _tokenizer, _model
+        response = requests.post(OLLAMA_URL, json=payload, timeout=120)
 
-# BUILD PROMPT
-def build_prompt(text: str) -> str:
+        if response.headers.get("Content-Type") == "application/x-ndjson":
+            result_text = ""
+            for line in response.iter_lines():
+                if line:
+                    data = json.loads(line.decode())
+                    if "response" in data:
+                        result_text += data["response"]
+            return result_text.strip()
+
+        data = response.json()
+        return data.get("response", "").strip()
+
+    except Exception as e:
+        print("[Ollama ERROR]:", e)
+        return "AI could not generate a response."
+
+
+def build_summary_prompt(text: str) -> str:
     return f"""
-You are a legal AI assistant.
-
-Summarize the following legal document focusing on:
-- Main purpose of the agreement
-- Involved parties
+Summarize the following legal document with focus on:
+- Purpose of the agreement
+- Parties involved
 - Obligations and responsibilities
+- Payment terms
 - Risks / penalties
 - Termination conditions
 - Important dates
 
-The summary must:
-- Be accurate and legally precise
-- Use full sentences
-- Avoid hallucinations
-- Only reflect the provided text
+Be precise. No hallucinations.
 
 DOCUMENT:
 {text}
 
-SUMMARIZE BELOW:
+SUMMARY:
 """
 
-# SUMMARY FUNCTION
+
 def generate_summary(text: str, max_tokens: int = 256) -> str:
-    tokenizer, model = load_model()
-
-    prompt = build_prompt(text)
-
-    try:
-        inputs = tokenizer(
-            prompt,
-            return_tensors="pt",
-            truncation=True,
-            max_length=1024,
-        )
-
-        with torch.no_grad():
-            outputs = model.generate(
-                **inputs,
-                max_new_tokens=max_tokens,
-                temperature=0.2,
-                top_p=0.95,
-                do_sample=False,
-                num_beams=4,
-                early_stopping=True,
-            )
-
-        summary = tokenizer.decode(outputs[0], skip_special_tokens=True).strip()
-        return summary
-
-    except Exception as e:
-        print("[Summarizer] Error during generation:", e)
-        return "Summary unavailable due to an internal error."
-
-
+    return query_ollama(text, max_tokens=max_tokens)
 
