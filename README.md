@@ -1,3 +1,4 @@
+# Legal Document Summarizer
 This project is a backend-first legal document summarization pipeline designed to process long legal PDFs and generate grounded, concise summaries using Large Language Models (LLMs).
 The system is built with a Retrieval-Augmented Generation (RAG)-ready architecture, enabling future extension into document question-answering and agent-based workflows.
 
