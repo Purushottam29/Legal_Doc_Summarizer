@@ -1,0 +1,41 @@
+ollama --version
+
+Commmand to install OLLAMA
+
+curl -fsSL https://ollama.com/install.sh | sh
+
+ollama pull mistral
+
+ollama run mistral "Hello"
+
+Check:
+Test the API directly:
+
+curl http://localhost:11434/api/version
+
+If we get JSON → the Ollama server is running.
+
+If not, start manually:
+
+ollama serve
+
+Keep this running.
+
+
+-> Test `/api/ask`
+Use any question:
+
+{
+  "question": "What are the payment terms?",
+  "top_k": 3
+}
+
+
+
+Full steps :-
+1. Install Ollama
+2. Pull `mistral` model
+3. Ensure Ollama server is running
+4. Restart FastAPI
+5. Test /upload
+6. Test /ask

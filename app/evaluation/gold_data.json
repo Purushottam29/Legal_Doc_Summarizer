@@ -1,0 +1,43 @@
+[
+  {
+    "query": "What was the main relief sought by A.K. Gopalan in this case?",
+    "relevant_clause_ids": ["DOC_ID_clause_0", "DOC_ID_clause_1"]
+  },
+  {
+    "query": "Under which constitutional article was the petition filed?",
+    "relevant_clause_ids": ["DOC_ID_clause_0"]
+  },
+  {
+    "query": "Which legislation was challenged in this case?",
+    "relevant_clause_ids": ["DOC_ID_clause_1", "DOC_ID_clause_2"]
+  },
+  {
+    "query": "What were the primary constitutional issues considered by the Court?",
+    "relevant_clause_ids": ["DOC_ID_clause_2", "DOC_ID_clause_3"]
+  },
+  {
+    "query": "How did the Court interpret Article 21 in relation to preventive detention?",
+    "relevant_clause_ids": ["DOC_ID_clause_4", "DOC_ID_clause_5"]
+  },
+  {
+    "query": "What is the relationship between Article 21 and Article 22 according to the judgment?",
+    "relevant_clause_ids": ["DOC_ID_clause_5", "DOC_ID_clause_6"]
+  },
+  {
+    "query": "Which provisions of the Preventive Detention Act were held unconstitutional?",
+    "relevant_clause_ids": ["DOC_ID_clause_7"]
+  },
+  {
+    "query": "What was the Court's reasoning regarding 'procedure established by law'?",
+    "relevant_clause_ids": ["DOC_ID_clause_4", "DOC_ID_clause_8"]
+  },
+  {
+    "query": "Did the Court uphold the validity of preventive detention in general?",
+    "relevant_clause_ids": ["DOC_ID_clause_6", "DOC_ID_clause_9"]
+  },
+  {
+    "query": "What was the final outcome of the petition?",
+    "relevant_clause_ids": ["DOC_ID_clause_9"]
+  }
+]
+

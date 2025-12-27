@@ -1,0 +1,23 @@
+fastapi
+uvicorn[standard]
+
+# Document extraction
+pdfplumber
+python-docx
+pytesseract
+Pillow
+
+# Chunking + tokenization
+nltk
+transformers
+
+# Embeddings
+sentence-transformers
+torch
+
+# Vector Database (ChromaDB)
+chromadb
+
+# File handling
+python-multipart
+
