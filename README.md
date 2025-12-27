@@ -18,7 +18,7 @@ This project addresses these challenges by:
 * Architecture ready for RAG-based document Q&A
 
 ## Architecture
-![Architecture]([Legal Document Summarizer — Full RAG Architecture (Free Stack) (2).png](https://github.com/Purushottam29/Legal_Doc_Summarizer/blob/76f44dc8d4d4c20440143b9e8c58fdfe1e9123c0/Legal%20Document%20Summarizer%20%E2%80%94%20Full%20RAG%20Architecture%20(Free%20Stack)%20(2).png))
+![Architecture](https://github.com/Purushottam29/Legal_Doc_Summarizer/blob/e75396f34c306140988099a15b24d840bcf068bb/assests/architecture.png)
 
 ## Tech Stack
 * Language: Python
@@ -28,6 +28,8 @@ This project addresses these challenges by:
 * Document Processing: PDF parsing & text extraction
 
 ## Project Structure
+![LDS](https://github.com/Purushottam29/Legal_Doc_Summarizer/blob/e75396f34c306140988099a15b24d840bcf068bb/assests/Directory.png)
+
 ## How it works
 * Legal PDFs are ingested and parsed into raw text
 * Text is divided into semantically meaningful chunks
